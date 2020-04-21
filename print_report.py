@@ -1,19 +1,6 @@
 import config
 
 
-def print_host_info():
-    hostname = config.hostname
-    host_os = config.host_os
-    ip_addr = config.ip_addr
-    default_gateway = config.def_gateway
-    netmask = config.netmask
-
-    print("The hostname of the system is: " + hostname)
-    print("The Operating System in use is: " + host_os)
-    print(hostname + " is communicating with an IP address of :" + ip_addr + " and CIDR bits of " + netmask)
-    print("The Default Gateway(Router) is on IP: " + default_gateway)
-
-
 def print_system_info():
     import main_menu
     import os

@@ -67,8 +67,7 @@ def menu():
         #  menu()
     elif option == "d":
         import print_report
-        os.system('clear')
-        print_report.print_host_info()
+        print("View Reports Here")
         input("Press Enter to continue...")
         menu()
     elif option == "q":
@@ -94,13 +93,19 @@ def nmap_menu():
     print("***                                                          ***")
     print("***                                                          ***")
     print("***             (1) - Scan a SINGLE IP                       ***")
-    print("***             (2) - Scan Full Network                      ***")
+    print("***             (2) - Scan For Active Hosts                  ***")
     print("***             (Q) - Quit NMAP                              ***")
     print("***                                                          ***")
     print("***                                                          ***")
     print("****************************************************************")
     print("****************************************************************")
-    print("")
+    print("***                                                          ***")
+    print("*** + Option 1 allows a scan of an individual IP address,    ***")
+    print("***   and return any ports which are open. This is then      ***")
+    print("***   saved in a list                                        ***")
+    print("***                                                          ***")
+    print("*** + Option 2 scans the current network, and will return a  ***")
+    print("***   list of IP addresses which are active.                 ***")
     nmap_option = input("Please select an option: ")
 
     if nmap_option == "1":
