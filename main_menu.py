@@ -12,8 +12,13 @@ def onload():
     os.system("clear")
     result = subprocess.call(['which', 'nmap'])
     if result == 0:
-        config.getsysinfo()
-        menu()
+        if not os.getuid() == 0:
+            print("Sorry, only can be run as root")
+            time.sleep(2)
+            exit()
+        else:
+            config.getsysinfo()
+            menu()
     else:
         print("NMAP is NOT installed. This needs to be installed to continue. Do you wish to install?")
         print("Note: This will be run as a SUDO user. Please ensure you are sudo to continue.")
@@ -92,10 +97,11 @@ def nmap_menu():
     print("***                                                          ***")
     print("***                                                          ***")
     print("***                                                          ***")
-    print("***             (1) - Scan a SINGLE IP                       ***")
-    print("***             (2) - Scan For Active Hosts                  ***")
+    print("***             (1) - Scan For Active Hosts                  ***")
+    print("***             (2) - List Active Host IP's                  ***")
+    print("***             (3) - Scan a SINGLE IP                       ***")
+    print("***             (4) - Scan Network                           ***")
     print("***             (Q) - Quit NMAP                              ***")
-    print("***                                                          ***")
     print("***                                                          ***")
     print("****************************************************************")
     print("****************************************************************")
@@ -109,8 +115,10 @@ def nmap_menu():
     nmap_option = input("Please select an option: ")
 
     if nmap_option == "1":
-        nmap_scanner.scan_ip()
+        nmap_scanner.populatehosts(config.def_gateway + config.netmask)
     elif nmap_option == "2":
+        nmap_scanner.scan_ip()
+    elif nmap_option == "3":
         nmap_scanner.scan_network(config.def_gateway + config.netmask)
     elif nmap_option.lower() == "q":
         menu()

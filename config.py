@@ -6,7 +6,7 @@ ip_addr = ""
 host_os = ""
 netmask = ""
 def_gateway = ""
-
+listofhosts = []
 
 #  Populates System Info on the Main Menu
 def getsysinfo():
