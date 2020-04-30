@@ -3,7 +3,6 @@ import os
 import time
 import config
 import ip_address
-import nmap_scanner
 
 
 def onload():
@@ -53,7 +52,9 @@ def menu():
     print("***                                                          ***")
     print("****************************************************************")
     print("****************************************************************")
-
+    print(" + No. of Single Scan Hosts stored:- " + str(config.singlehostcount))
+    print(" + No. of Multi Scan Hosts stored:- " + str(config.networkhostcount))
+    print("")
     option = input("Please enter a choice:  ")
     option = option.lower()
 
@@ -66,10 +67,7 @@ def menu():
         os.system('clear')
         menu()
     elif option == "c":
-        print("NMAP Menu")
-        #  input("Press Enter to continue...")
         nmap_menu()
-        #  menu()
     elif option == "d":
         import print_report
         print("View Reports Here")
@@ -86,7 +84,7 @@ def menu():
 
 
 def nmap_menu():
-
+    import nmap_scanner
     os.system("clear")
     print("****************************************************************")
     print("****************************************************************")
@@ -101,25 +99,32 @@ def nmap_menu():
     print("***             (2) - List Active Host IP's                  ***")
     print("***             (3) - Scan a SINGLE IP                       ***")
     print("***             (4) - Scan Network                           ***")
+    print("***             (H) - Help                                   ***")
     print("***             (Q) - Quit NMAP                              ***")
     print("***                                                          ***")
     print("****************************************************************")
     print("****************************************************************")
-    print("***                                                          ***")
-    print("*** + Option 1 allows a scan of an individual IP address,    ***")
-    print("***   and return any ports which are open. This is then      ***")
-    print("***   saved in a list                                        ***")
-    print("***                                                          ***")
-    print("*** + Option 2 scans the current network, and will return a  ***")
-    print("***   list of IP addresses which are active.                 ***")
+    print("")
     nmap_option = input("Please select an option: ")
 
     if nmap_option == "1":
-        nmap_scanner.populatehosts(config.def_gateway + config.netmask)
+        ip = config.def_gateway + config.netmask
+        nmap_scanner.populatehosts(ip)
     elif nmap_option == "2":
-        nmap_scanner.scan_ip()
+        nmap_scanner.listactivehosts()
     elif nmap_option == "3":
-        nmap_scanner.scan_network(config.def_gateway + config.netmask)
+        ip = input("Please enter an IP address to scan: ")
+        nmap_scanner.scansingleip(ip)
+        time.sleep(1)
+        nmap_menu()
+    elif nmap_option == "4":
+        print("NMAP Scan Entire Network")
+        time.sleep(1)
+        nmap_menu()
+    elif nmap_option.lower() == "h":
+        import help
+        os.system("clear")
+        help.nmaphelp()
     elif nmap_option.lower() == "q":
         menu()
     else:

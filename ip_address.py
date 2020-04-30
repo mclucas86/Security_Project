@@ -91,3 +91,10 @@ def get_default_gateway():
     for x in temp_output:
         gw_output = ".".join(x)
     return gw_output
+
+
+#  Method to organise a list of IP address in numerical order
+def ip_to_tuple(ip_str):
+    ip = ip_str.split(':')[0]
+    ip = ip.split('.')
+    return tuple(map(int, ip))

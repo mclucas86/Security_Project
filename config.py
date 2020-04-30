@@ -7,6 +7,10 @@ host_os = ""
 netmask = ""
 def_gateway = ""
 listofhosts = []
+singlescannedhosts = []
+singlehostcount = 0
+networkhostcount = 0
+
 
 #  Populates System Info on the Main Menu
 def getsysinfo():
