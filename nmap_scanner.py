@@ -105,37 +105,37 @@ def scansingleip(ip):
     import main_menu
     os.system("clear")
     nm = nmap.PortScanner()
+    hostname = ""
     print("Currently scanning IP:- " + ip)
     try:
-        print(nm.scan(hosts=ip, ports='1-1000', arguments='-sV -O -T3'))
-    except:
+        print(nm.scan(hosts=ip, ports='1-65535', arguments='-sV -O -T3 -sC'))
+    except KeyError:
         print("Host offline......")
+        pass
     try:
         hostname = nm[ip].hostname()
     except IndexError:
         hostname = "*** UNKNOWN ***"
     except KeyError:
         print("Host offline.......")
-        time.sleep(1)
-        main_menu.nmap_menu()
     try:
         mac = nm[ip]['addresses']['mac']
-    except:
+    except KeyError:
         mac = "*** UNKNOWN ***"
     try:
         opsys = nm[ip]['osclass']['osfamily']
-    except:
+    except KeyError:
         opsys = "*** UNKNOWN ***"
     try:
         import datetime
         uptime = nm[ip]['uptime']['seconds']
         uptime = int(uptime)
         uptime = str(datetime.timedelta(seconds=uptime))
-    except:
+    except KeyError:
         uptime = "*** UNKNOWN ***"
     try:
         lastboot = nm[ip]['uptime']['lastboot']
-    except:
+    except KeyError:
         lastboot = "*** UNKNOWN ***"
     print("*************************************************")
     print("         Host Scanned: - " + ip)
