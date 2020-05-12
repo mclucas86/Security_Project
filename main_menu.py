@@ -16,6 +16,16 @@ def startup():
         time.sleep(1)
         exit()
     else:
+        pip_install = subprocess.call(['which', 'pip'])
+        if pip_install != 0:
+            os.system("sudo apt-get install python-pip -y")
+            startup()
+        colorama_install = subprocess.call(['which', 'colorama'])
+        if colorama_install != 0:
+            os.system("sudo python3 -m pip install colorama")
+        nmap_py = subprocess.call(['which', 'python-nmap'])
+        if nmap_py != 0:
+            os.system("sudo pip install python-nmap")
         nmap_install = subprocess.call(['which', 'nmap'])
         if nmap_install == 0:
             config.getsysinfo()
@@ -34,6 +44,7 @@ def startup():
 
 
 def main_menu():
+    from colorama import Fore, Style
     local_ip = config.ip_addr
     local_netmask = config.netmask
     local_cidr = config.cidr_prefix
@@ -57,11 +68,12 @@ def main_menu():
     print("****************************************************************")
     print("****************************************************************")
     print("")
-    print(" + IP Address:- " + local_ip)
-    print(" + Netmask:- " + local_netmask)
-    print(" + CIDR Prefix:- " + local_cidr)
-    print(" + Default Gateway:- " + local_gw)
+    print(Fore.GREEN + " + IP Address:- " + Fore.WHITE + local_ip)
+    print(Fore.GREEN + " + Netmask:- " + Fore.WHITE + local_netmask)
+    print(Fore.GREEN + " + CIDR Prefix:- " + Fore.WHITE + local_cidr)
+    print(Fore.GREEN + " + Default Gateway:- " + Fore.WHITE + local_gw)
     print("")
+    print(Style.RESET_ALL)
     menu_option = input("Please enter an option: ")
     menu_option = menu_option.lower()
     if menu_option == "a":
@@ -146,4 +158,3 @@ def nmap_menu():
 
 
 startup()
-

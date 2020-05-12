@@ -102,13 +102,12 @@ def singlescanoption():
 
 
 def scansingleip(ip):
-    import main_menu
     os.system("clear")
     nm = nmap.PortScanner()
     hostname = ""
     print("Currently scanning IP:- " + ip)
     try:
-        print(nm.scan(hosts=ip, ports='1-65535', arguments='-sV -O -T3 -sC'))
+        print(nm.scan(hosts=ip, ports='1-1000', arguments='-sV -O -T3 -sC'))
     except KeyError:
         print("Host offline......")
         pass
@@ -158,12 +157,16 @@ def scansingleip(ip):
                     print("Version:- " + nm[ip][protocol][port]['version'])
                     print("State:- " + nm[ip][protocol][port]['state'])
                     print("Extra Info:- " + nm[ip][protocol][port]['extrainfo'])
-                    print("------------------------------------------------------")
                     if nm[ip][protocol][port]['cpe'] != "":
-                        if cpe == "":
-                            if nm[ip][protocol][port]['cpe'] != "":
-                                cpe = nm[ip][protocol][port]['cpe']
-                getcpe(cpe)
+                        if nm[ip][protocol][port]['cpe'] != "":
+                            cpe = nm[ip][protocol][port]['cpe']
+                    getcpe(cpe)
+                    if "script" in nm[ip][protocol][port]:
+                        print("----------------------------------------------------")
+                        print("     Vulnerability Assessment")
+                        for script in nm[ip][protocol][port]['script']:
+                            print("| " + script + ":- " + nm[ip][protocol][port]['script'][script])
+                    print("------------------------------------------------------")
             else:
                 print("No open ports detected.")
 
